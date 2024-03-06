@@ -1,0 +1,9 @@
+**/.pytest_cache/
+**/__pycache__/
+**/geckodriver.log
+
+node_modules/
+package-lock.json
+
+src/static/pack/
+src/static/tail.css

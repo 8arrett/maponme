@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/s/tail.css" rel="stylesheet" />
+    <script src="/s/pack/main.bundle.js" defer></script>
+    <!-- Credit: https://favicon.io/emoji-favicons/alien -->
+    <link href="/favicon.ico" rel="icon" />
+    <link rel="canonical" href="https://mapon.me" />
+
+    <title>Put a Map on Me!</title>
+
+    <meta
+      name="description"
+      content="Share your location through your browser in a single click."
+    />
+  </head>
+  <body>
+    <main id="introTile" class="py-6 sm:px-4 bg-blue-100 min-h-screen">
+      <div class="mx-auto">
+        <div id="titleDiv" class="pb-4 text-center fadeinTitle">
+          <p class="text-6xl font-bold text-slate-900">Put a Map on Me!</p>
+        </div>
+        <div
+          class="bg-blue-50 max-w-xl mx-auto rounded-sm p-4 sm:p-8 text-lg my-4 sm:my-8"
+        >
+          <p>Share where you are with anyone through a temporary link.</p>
+          <p class="pt-8">
+            Don't worry if you forget about us, we'll clean up your link for you
+            in a few hours. Plus, you can choose to close it at anytime.
+          </p>
+          <p class="pt-8">We only:</p>
+          <ul class="list-disc pl-6 sm:pl-8">
+            <li class="sm:pl-4">
+              run open source technology
+              <span class="whitespace-nowrap"
+                >(<a
+                  class="text-blue-600 after:content-['_↗']"
+                  href="https://github.com/8arrett/"
+                  >our source</a
+                >)</span
+              >
+            </li>
+            <li class="sm:pl-4">
+              store your location while you ask us to share it
+            </li>
+            <li class="sm:pl-4">
+              update your location while this browser tab is open
+            </li>
+          </ul>
+        </div>
+        <div id="startButtonContainer" class="sm:my-4">
+          <div class="bg-lime-100 rounded-xl p-8 mx-auto max-w-xs">
+            <div>
+              <p class="text-lg font-semibold">So go ahead, go map yourself!</p>
+            </div>
+            <div class="mt-4 self-center mx-auto text-center">
+              <button
+                id="startButton"
+                type="button"
+                class="bg-slate-600 hover:bg-lime-900 font-semibold text-white border-r-2 border-b-2 py-4 px-6 rounded-lg init-shadow"
+              >
+                Put me on the map
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="permissionTile" class="py-6 px-4 hidden">
+      <div id="permissionSeeking" class="w-10/12 sm:w-64 mx-auto mt-64">
+        <p class="my-6">
+          We're currently checking whether your GPS is able to share your
+          location with us.
+        </p>
+        <p class="my-6">
+          Allowing this tab temporary access will tell us where to put you on
+          the map.
+        </p>
+        <p class="my-6">
+          Popups not showing up? Check your location settings, they might be
+          playing hide and seek!
+        </p>
+      </div>
+      <div id="permissionDenied" class="w-10/12 sm:w-64 mx-auto mt-64 hidden">
+        <p class="my-6">
+          Your device is signaling that it is unable to find you on the earth.
+        </p>
+        <p class="my-6">
+          You may need to find what is preventing that in your location
+          settings, or maybe try flying your spaceship a little closer.
+        </p>
+        <button
+          id="startButton2"
+          type="button"
+          class="bg-slate-600 text-white text-sm my-4 py-2 px-3 rounded-lg"
+        >
+          Try again!
+        </button>
+      </div>
+    </div>
+    <div id="mapTile" class="w-screen h-full sm:h-screen absolute top-0 hidden">
+      <div class="map-menu">
+        <button id="centerMap" class="map-button hidden">Hover back</button>
+        <button id="closeLink" class="map-button hidden">Close link</button>
+      </div>
+      <div
+        id="copyLinkText"
+        class="absolute z-10 bottom-20 right-4 text-green-700 opacity-60 text-right hidden"
+      >
+        <p id="copyLinkUrl" class="font-semibold">https://mapon.me/</p>
+        <p class="font-bold">Link copied!</p>
+      </div>
+      <button
+        id="copyLinkButton"
+        class="map-button absolute z-10 bottom-8 right-4 hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="1em"
+          viewBox="0 0 448 512"
+        >
+          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path
+            d="M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
+          />
+        </svg>
+      </button>
+      <div
+        id="accessTimer"
+        class="absolute z-10 bottom-4 left-4 opacity-90 rounded-xl bg-sky-100 shadow-lg shadow-sky-300"
+      >
+        <div id="accessTimerText" class="p-2">
+          Last updated <span id="accessTimerTime">some time</span> ago...
+        </div>
+      </div>
+      <div id="loadingIcon" class="absolute z-10 bottom-24 left-12 hidden">
+        <div class="relative">
+          <div class="meetup">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="messagePopup"
+      class="z-50 absolute top-0 right-0 sm:top-6 sm:right-6 m-2 p-3 rounded-2xl bg-red-100 overflow-hidden hidden"
+    >
+      <button id="closePopup" class="float-right font-extrabold">[x]</button>
+      <p>&nbsp;</p>
+      <p id="textPopup" class="font-bold"></p>
+    </div>
+  </body>
+</html>
